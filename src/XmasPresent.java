@@ -11,6 +11,7 @@ public class XmasPresent implements Serializable {
 
     public void setEnzanshi(String present) {
         this.Enzanshi = present;
+        // tghjkl;
     }
 
     public int getSuuji2() {

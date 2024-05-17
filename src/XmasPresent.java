@@ -2,23 +2,31 @@ import java.io.Serializable;
 
 public class XmasPresent implements Serializable {
 
-    String message;
-    String content;
+    int suuji1, Suuji2;
+    String Enzanshi;
 
-    public String getMessage() {
-        return message;
+    public String getEnzanshi() {
+        return Enzanshi;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setEnzanshi(String present) {
+        this.Enzanshi = present;
     }
 
-    public String getContent() {
-        return content;
+    public int getSuuji2() {
+        return Suuji2;
     }
 
-    public void setContent(String present) {
-        this.content = present;
+    public void setSuuji2(int present) {
+        this.Suuji2 = present;
+    }
+
+    public int getContent() {
+        return suuji1;
+    }
+
+    public void setContent(int present) {
+        this.suuji1 = present;
     }
 
 }

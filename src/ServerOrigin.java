@@ -1,5 +1,4 @@
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,18 +8,9 @@ public class ServerOrigin {
 
     private static final int times = 2;
 
-    private static String serverProcess(String content) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("🎁");
-        for (int i = 0; i < times; i++) {
-            sb.append(content);
-        }
-        sb.append("🎁");
-        String result = sb.toString();
-        return result;
-    }
-
     public static void main(String arg[]) {
+        String p = "owari";
+
         try {
             /* 通信の準備をする */
             Scanner scanner = new Scanner(System.in);
@@ -31,33 +21,36 @@ public class ServerOrigin {
             ServerSocket server = new ServerSocket(port); // ポート番号を指定し、クライアントとの接続の準備を行う
             System.out.println("a");
             Socket socket = server.accept(); // クライアントからの接続要求を待ち、
-            // 要求があればソケットを取得し接続を行う
-            System.out.println("接続しました。相手の入力を待っています......");
-
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
-            XmasPresent present = (XmasPresent) ois.readObject();// Integerクラスでキャスト。
+            // 要求があればソケットを取得し接続を行う
+            System.out.println("接続しました。相手の入力を待っています......");
+            while (socket.getInputStream() != null) {
 
-            String presentFromClient = present.getContent();
-            System.out.println("プレゼントの内容は" + presentFromClient);
+                if (socket.getInputStream() != null) {
+                    XmasPresent present = (XmasPresent) ois.readObject();
+                    int a = present.getContent();
+                    int b = present.getSuuji2();
+                    float answer;
+                    if (present.Enzanshi.equals("+")) {
+                        // System.out.println(present.getContent() + "getsuuji2" + present.getSuuji2());
+                        answer = a + b;
+                        System.out.println((answer));
+                    } else if (present.Enzanshi.equals("-")) {
+                        answer = a - b;
+                        System.out.println(answer);
+                    } else if (present.Enzanshi.equals("*")) {
+                        answer = a * b;
+                        System.out.println(answer);
+                    } else if (present.Enzanshi.equals("/")) {
+                        answer = (float) a / b;
 
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                        System.out.println(answer);
+                    }
 
-            XmasPresent response = new XmasPresent();
-            response.setMessage("サーバーです。メリークリスマス！\n" + presentFromClient + "ありがとう。\nプレゼントのお返しは" + times + "倍" + "です");
-            response.setContent(serverProcess(presentFromClient));
-
-            oos.writeObject(response);
-            oos.flush();
-
-            // close処理
-            if (presentFromClient == "owari") {
-                System.out.println("はにゃ～～～");
-                ois.close();
-                oos.close();
-                // socketの終了。
-                socket.close();
-                server.close();
+                } else {
+                    System.out.println("owari");
+                }
             }
         } // エラーが発生したらエラーメッセージを表示してプログラムを終了する
         catch (BindException be) {

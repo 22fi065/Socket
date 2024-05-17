@@ -47,7 +47,6 @@ public class XmasServer {
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 
             XmasPresent response = new XmasPresent();
-            response.setMessage("サーバーです。メリークリスマス！\n" + presentFromClient + "ありがとう。\nプレゼントのお返しは" + times + "倍" + "です");
             response.setContent(serverProcess(presentFromClient));
 
             oos.writeObject(response);
